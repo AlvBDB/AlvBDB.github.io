@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-09-30T18:02:42+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Álvaro López Hurtado</title><subtitle>Analista de Base de Datos apasionado</subtitle><entry><title type="html">Proyecto SQL y Power BI: Sistema de Gestión de Ventas</title><link href="http://localhost:4000/markdown-extra-components/" rel="alternate" type="text/html" title="Proyecto SQL y Power BI: Sistema de Gestión de Ventas" /><published>2024-09-10T18:46:00+00:00</published><updated>2024-09-10T18:46:00+00:00</updated><id>http://localhost:4000/markdown-extra-components</id><content type="html" xml:base="http://localhost:4000/markdown-extra-components/"><![CDATA[<h2 id="proyecto-de-sistema-gestión-de-ventas-para-una-tienda">Proyecto de Sistema Gestión de Ventas para una Tienda</h2>
+
+<p>En este proyecto desarrollé un sistema de gestión de datos para una tienda minorista, incluyendo la administración de clientes, proveedores, productos, ventas e inventario. La base de datos está diseñada para optimizar el seguimiento de las transacciones (diarias, semanales o mensuales), mostrar los productos más vendidos, generar reportes detallados que faciliten la toma de decisiones y mantener un control preciso del inventario.</p>
+
+<p>Las herramientas utilizadas en este proyecto son <strong>MySQL</strong> para la gestión de la base de datos y <strong>Power BI</strong> para la visualización de datos.</p>
+
+<h3 id="tablas">Tablas:</h3>
+
+<ul>
+  <li><strong>Clientes</strong>: Almacena la información de los clientes que realizan compras en la tienda.
+    <ul>
+      <li>Campos: <code class="language-plaintext highlighter-rouge">cliente_id</code>, <code class="language-plaintext highlighter-rouge">nombre</code>, <code class="language-plaintext highlighter-rouge">apellido</code>, <code class="language-plaintext highlighter-rouge">email</code>, <code class="language-plaintext highlighter-rouge">telefono</code>.</li>
+    </ul>
+  </li>
+  <li><strong>Proveedores</strong>: Registra los datos de contacto de los proveedores de productos.
+    <ul>
+      <li>Campos: <code class="language-plaintext highlighter-rouge">proveedor_id</code>, <code class="language-plaintext highlighter-rouge">nombre_proveedor</code>, <code class="language-plaintext highlighter-rouge">contacto_proveedor</code>.</li>
+    </ul>
+  </li>
+  <li><strong>Productos</strong>: Contiene el catálogo de productos disponibles para la venta.
+    <ul>
+      <li>Campos: <code class="language-plaintext highlighter-rouge">producto_id</code>, <code class="language-plaintext highlighter-rouge">nombre</code>, <code class="language-plaintext highlighter-rouge">precio</code>, <code class="language-plaintext highlighter-rouge">categoria</code>, <code class="language-plaintext highlighter-rouge">stock</code>, <code class="language-plaintext highlighter-rouge">proveedor_id</code>.</li>
+    </ul>
+  </li>
+  <li><strong>Ventas</strong>: Registra cada transacción realizada en la tienda, vinculando a los clientes con los productos comprados y el monto total de la venta.
+    <ul>
+      <li>Campos: <code class="language-plaintext highlighter-rouge">venta_id</code>, <code class="language-plaintext highlighter-rouge">cliente_id</code>, <code class="language-plaintext highlighter-rouge">producto_id</code>, <code class="language-plaintext highlighter-rouge">fecha_venta</code>, <code class="language-plaintext highlighter-rouge">total_venta</code>.</li>
+    </ul>
+  </li>
+  <li><strong>Inventario</strong>: Permite llevar un control detallado del stock de cada producto, con un registro del stock inicial y las actualizaciones tras cada venta.
+    <ul>
+      <li>Campos: <code class="language-plaintext highlighter-rouge">inventario_id</code>, <code class="language-plaintext highlighter-rouge">producto_id</code>, <code class="language-plaintext highlighter-rouge">stock_inicial</code>, <code class="language-plaintext highlighter-rouge">stock_actualizado</code>, <code class="language-plaintext highlighter-rouge">fecha_actualizado</code>.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="creación-de-la-base-de-datos">Creación de la base de datos</h3>
+
+<p>A continuación, se muestra el código para la creación de la base de datos y las tablas correspondientes:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Creación de la base de datos Tienda</span>
+<span class="k">create</span> <span class="k">database</span> <span class="n">if</span> <span class="k">not</span> <span class="k">exists</span> <span class="n">Tienda</span><span class="p">;</span>
+
+<span class="c1">-- Usamos la base de datos Tienda</span>
+<span class="n">use</span> <span class="n">Tienda</span><span class="p">;</span>
+
+<span class="c1">-- Tabla Clientes</span>
+<span class="k">create</span> <span class="k">table</span> <span class="n">Clientes</span> <span class="p">(</span>
+    <span class="n">cliente_id</span> <span class="nb">int</span> <span class="n">auto_increment</span> <span class="k">primary</span> <span class="k">key</span><span class="p">,</span>
+    <span class="n">nombre</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span>
+    <span class="n">apellido</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+    <span class="n">email</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span> <span class="k">unique</span><span class="p">,</span>
+    <span class="n">telefono</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">-- Tabla Proveedores</span>
+<span class="k">create</span> <span class="k">table</span> <span class="n">Proveedores</span> <span class="p">(</span>
+    <span class="n">proveedor_id</span> <span class="nb">int</span> <span class="n">auto_increment</span> <span class="k">primary</span> <span class="k">key</span><span class="p">,</span>
+    <span class="n">nombre_proveedor</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span>
+    <span class="n">contacto_proveedor</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span>
+<span class="p">);</span>
+
+<span class="c1">-- Tabla Productos</span>
+<span class="k">create</span> <span class="k">table</span> <span class="n">Productos</span> <span class="p">(</span>
+    <span class="n">producto_id</span> <span class="nb">int</span> <span class="n">auto_increment</span> <span class="k">primary</span> <span class="k">key</span><span class="p">,</span>
+    <span class="n">nombre</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span>
+    <span class="n">precio</span> <span class="nb">decimal</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span>
+    <span class="n">categoria</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span>
+    <span class="n">stock</span> <span class="nb">int</span> <span class="k">check</span> <span class="p">(</span><span class="n">stock</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="n">proveedor_id</span> <span class="nb">int</span> <span class="k">not</span> <span class="k">null</span>
+<span class="p">);</span>
+
+<span class="c1">-- Tabla Ventas</span>
+<span class="k">create</span> <span class="k">table</span> <span class="n">Ventas</span> <span class="p">(</span>
+    <span class="n">venta_id</span> <span class="nb">int</span> <span class="n">auto_increment</span> <span class="k">primary</span> <span class="k">key</span><span class="p">,</span>
+    <span class="n">cliente_id</span> <span class="nb">int</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span>
+    <span class="n">producto_id</span> <span class="nb">int</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span>
+    <span class="n">fecha_venta</span> <span class="nb">date</span><span class="p">,</span>
+    <span class="n">total_venta</span> <span class="nb">decimal</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+    <span class="k">foreign</span> <span class="k">key</span> <span class="p">(</span><span class="n">cliente_id</span><span class="p">)</span> <span class="k">references</span> <span class="n">Clientes</span><span class="p">(</span><span class="n">cliente_id</span><span class="p">),</span>
+    <span class="k">foreign</span> <span class="k">key</span> <span class="p">(</span><span class="n">producto_id</span><span class="p">)</span> <span class="k">references</span> <span class="n">Productos</span><span class="p">(</span><span class="n">producto_id</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">-- Tabla Inventario</span>
+<span class="k">create</span> <span class="k">table</span> <span class="n">Inventario</span> <span class="p">(</span>
+    <span class="n">inventario_id</span> <span class="nb">int</span> <span class="n">auto_increment</span> <span class="k">primary</span> <span class="k">key</span><span class="p">,</span>
+    <span class="n">producto_id</span> <span class="nb">int</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span>
+    <span class="n">stock_inicial</span> <span class="nb">int</span> <span class="k">not</span> <span class="k">null</span> <span class="k">check</span> <span class="p">(</span><span class="n">stock_inicial</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="n">stock_actualizado</span> <span class="nb">int</span> <span class="k">not</span> <span class="k">null</span> <span class="k">check</span> <span class="p">(</span><span class="n">stock_actualizado</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="n">fecha_actualizado</span> <span class="nb">date</span><span class="p">,</span>
+    <span class="k">foreign</span> <span class="k">key</span> <span class="p">(</span><span class="n">producto_id</span><span class="p">)</span> <span class="k">references</span> <span class="n">Productos</span><span class="p">(</span><span class="n">producto_id</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div></div>
+<p><img src="/assets/images/SQL/CreacionDB_1.png" alt="Descripción de la imagen" />
+<img src="/assets/images/SQL/CreacionDB_2.png" alt="Descripción de la imagen" />
+<img src="/assets/images/SQL/CreacionDB_3.png" alt="Descripción de la imagen" /></p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- Datos para la tabla Clientes</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">Clientes</span> <span class="p">(</span><span class="n">nombre</span><span class="p">,</span> <span class="n">apellido</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">telefono</span><span class="p">)</span> <span class="k">values</span>
+<span class="p">(</span><span class="s1">'Juan'</span><span class="p">,</span> <span class="s1">'Pérez'</span><span class="p">,</span> <span class="s1">'juan.perez@gmail.com'</span><span class="p">,</span> <span class="s1">'123456789'</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">'Ana'</span><span class="p">,</span> <span class="s1">'García'</span><span class="p">,</span> <span class="s1">'ana.garcia@gmail.com'</span><span class="p">,</span> <span class="s1">'987654321'</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">'Luis'</span><span class="p">,</span> <span class="s1">'Fernández'</span><span class="p">,</span> <span class="s1">'luis.fernandez@outlook.com'</span><span class="p">,</span> <span class="s1">'192837465'</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">'Marta'</span><span class="p">,</span> <span class="s1">'López'</span><span class="p">,</span> <span class="s1">'marta.lopez@outlook.com'</span><span class="p">,</span> <span class="s1">'981276345'</span><span class="p">);</span>
+
+<span class="c1">-- Datos para la tabla Proveedores</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">Proveedores</span> <span class="p">(</span><span class="n">nombre_proveedor</span><span class="p">,</span> <span class="n">contacto_proveedor</span><span class="p">)</span> <span class="k">values</span>
+<span class="p">(</span><span class="s1">'Proveedor A'</span><span class="p">,</span> <span class="s1">'contactoA@gmail.com'</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">'Proveedor B'</span><span class="p">,</span> <span class="s1">'contactoB@outlook.com'</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">'Proveedor C'</span><span class="p">,</span> <span class="s1">'contactoC@outlook.com'</span><span class="p">);</span>
+
+<span class="c1">-- Datos para la tabla Productos</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">Productos</span> <span class="p">(</span><span class="n">nombre</span><span class="p">,</span> <span class="n">precio</span><span class="p">,</span> <span class="n">categoria</span><span class="p">,</span> <span class="n">stock</span><span class="p">,</span> <span class="n">proveedor_id</span><span class="p">)</span> <span class="k">values</span>
+<span class="p">(</span><span class="s1">'Portátil'</span><span class="p">,</span> <span class="mi">1000</span><span class="p">.</span><span class="mi">00</span><span class="p">,</span> <span class="s1">'Electrónica'</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">'Teléfono'</span><span class="p">,</span> <span class="mi">500</span><span class="p">.</span><span class="mi">00</span><span class="p">,</span> <span class="s1">'Electrónica'</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">'Mesa'</span><span class="p">,</span> <span class="mi">200</span><span class="p">.</span><span class="mi">00</span><span class="p">,</span> <span class="s1">'Muebles'</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">'Silla'</span><span class="p">,</span> <span class="mi">50</span><span class="p">.</span><span class="mi">00</span><span class="p">,</span> <span class="s1">'Muebles'</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">'Cámara'</span><span class="p">,</span> <span class="mi">300</span><span class="p">.</span><span class="mi">00</span><span class="p">,</span> <span class="s1">'Fotografía'</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+
+<span class="c1">-- Datos para la tabla Ventas</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">Ventas</span> <span class="p">(</span><span class="n">cliente_id</span><span class="p">,</span> <span class="n">producto_id</span><span class="p">,</span> <span class="n">fecha_venta</span><span class="p">,</span> <span class="n">total_venta</span><span class="p">)</span> <span class="k">values</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'2024-09-01'</span><span class="p">,</span> <span class="mi">1000</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'2024-09-02'</span><span class="p">,</span> <span class="mi">500</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'2024-09-05'</span><span class="p">,</span> <span class="mi">200</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">'2024-09-06'</span><span class="p">,</span> <span class="mi">50</span><span class="p">.</span><span class="mi">00</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">'2024-09-10'</span><span class="p">,</span> <span class="mi">300</span><span class="p">.</span><span class="mi">00</span><span class="p">);</span>
+
+<span class="c1">-- Datos para la tabla Inventario</span>
+<span class="k">insert</span> <span class="k">into</span> <span class="n">Inventario</span> <span class="p">(</span><span class="n">producto_id</span><span class="p">,</span> <span class="n">stock_inicial</span><span class="p">,</span> <span class="n">stock_actualizado</span><span class="p">,</span> <span class="n">fecha_actualizado</span><span class="p">)</span> <span class="k">values</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="s1">'2024-09-01'</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="s1">'2024-09-02'</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">'2024-09-05'</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="s1">'2024-09-06'</span><span class="p">),</span>
+<span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">'2024-09-10'</span><span class="p">);</span>
+</code></pre></div></div>
+<p><img src="/assets/images/SQL/Datos_db1.png" alt="Descripción de la imagen" />
+<img src="/assets/images/SQL/Datos_db2.png" alt="Descripción de la imagen" /></p>
+
+<p>Una vez creada la base de datos con sus respectivas tablas, gestionaremos la
+información almacenada a través de consultas SQL avanzadas para poder realizar
+análisis eficientes. Estas consultas permitirán generar reportes clave que faciliten la 
+toma de decisiones estratégicas.</p>
+
+<h3 id="consulta-1-obtener-total-de-ventas-diarias-semanales-y-mensuales">Consulta 1: Obtener total de ventas diarias, semanales y mensuales</h3>
+<p>La primera consulta abordará el análisis de las respectivas ventas en distintos 
+periodos de tiempo, específicamente en ventas diarias, semanales y mensuales. 
+Facilitar total a la evaluación del rendimiento de la tienda a lo largo del tiempo.</p>
+
+<h4 id="diarias">Diarias</h4>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span>
+<span class="k">sum</span><span class="p">(</span><span class="n">_venta</span><span class="p">)</span> <span class="k">as</span> <span class="s1">'Venta Total'</span><span class="p">,</span>
+<span class="k">day</span><span class="p">(</span><span class="n">fecha_venta</span><span class="p">)</span> <span class="k">as</span> <span class="s1">'Dia del mes'</span>
+<span class="k">from</span> <span class="n">ventas</span>
+<span class="k">where</span> <span class="k">month</span><span class="p">(</span><span class="n">fecha_venta</span><span class="p">)</span> <span class="o">=</span><span class="mi">09</span> <span class="k">and</span> <span class="nb">year</span><span class="p">(</span><span class="n">fecha_venta</span><span class="p">)</span><span class="o">=</span><span class="mi">2024</span>
+<span class="k">group</span> <span class="k">by</span> <span class="k">day</span><span class="p">(</span><span class="n">fecha_venta</span><span class="p">)</span>
+<span class="k">order</span> <span class="k">by</span> <span class="k">day</span><span class="p">(</span><span class="n">fecha_venta</span><span class="p">)</span>
+</code></pre></div></div>
+<p><img src="/assets/images/SQL/Consulta_dias.png" alt="Descripción de la imagen" /></p>
+
+<h4 id="semanal">Semanal</h4>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span>
+<span class="k">sum</span><span class="p">(</span><span class="n">total_venta</span><span class="p">)</span> <span class="k">as</span> <span class="s1">'Venta Total'</span><span class="p">,</span>
+<span class="n">floor</span><span class="p">((</span><span class="k">day</span><span class="p">(</span><span class="n">fecha_venta</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">as</span> <span class="s1">'Semana del mes'</span>
+<span class="k">from</span> <span class="n">ventas</span>
+<span class="k">where</span> <span class="k">month</span><span class="p">(</span><span class="n">fecha_venta</span><span class="p">)</span> <span class="o">=</span><span class="mi">9</span> <span class="k">and</span> <span class="nb">year</span><span class="p">(</span><span class="n">fecha_venta</span><span class="p">)</span><span class="o">=</span><span class="mi">2024</span>
+<span class="k">group</span> <span class="k">by</span> <span class="n">floor</span><span class="p">((</span><span class="k">day</span><span class="p">(</span><span class="n">fecha_venta</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="k">order</span> <span class="k">by</span> <span class="n">floor</span><span class="p">((</span><span class="k">day</span><span class="p">(</span><span class="n">fecha_venta</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+</code></pre></div></div>
+<p><img src="/assets/images/SQL/Semanal.png" alt="Descripción de la imagen" /></p>
+
+<h4 id="mensual">Mensual</h4>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span>
+<span class="k">sum</span><span class="p">(</span><span class="n">total_venta</span><span class="p">)</span> <span class="k">as</span> <span class="s1">'Venta Total'</span><span class="p">,</span>
+<span class="k">month</span><span class="p">(</span><span class="n">fecha_venta</span><span class="p">)</span> <span class="k">as</span> <span class="s1">'Mes'</span>
+<span class="k">from</span> <span class="n">ventas</span>
+<span class="k">where</span> <span class="k">month</span><span class="p">(</span><span class="n">fecha_venta</span><span class="p">)</span> <span class="o">=</span><span class="mi">9</span> <span class="k">and</span> <span class="nb">year</span><span class="p">(</span><span class="n">fecha_venta</span><span class="p">)</span>
+<span class="k">group</span> <span class="k">by</span> <span class="k">month</span><span class="p">(</span><span class="n">fecha_venta</span><span class="p">)</span>
+<span class="k">order</span> <span class="k">by</span> <span class="k">month</span><span class="p">(</span><span class="n">fecha_venta</span><span class="p">)</span>
+</code></pre></div></div>
+<p><img src="/assets/images/SQL/Mensual.png" alt="Descripción de la imagen" /></p>
+
+<h3 id="consulta-2-ranking-de-productos-más-vendidos">Consulta 2: Ranking de productos más vendidos</h3>
+<p>La segunda consulta visualizara un ranking de productos más vendidos de la tienda, el 
+cual ayudara a saber las tendencias de consumo. Este análisis permitirá tomar
+decisiones sobre el inventario y las estrategias de marketing.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">Producto_Ventas</span> <span class="k">as</span> <span class="p">(</span>
+<span class="k">select</span> <span class="n">productos</span><span class="p">.</span><span class="n">nombre</span> <span class="k">as</span> <span class="n">Producto</span><span class="p">,</span> <span class="k">count</span><span class="p">(</span><span class="n">ventas</span><span class="p">.</span><span class="n">producto_id</span><span class="p">)</span> <span class="k">as</span> <span class="n">Ventas</span>
+<span class="k">from</span> <span class="n">productos</span>
+<span class="k">join</span> <span class="n">ventas</span> <span class="k">on</span> <span class="n">productos</span><span class="p">.</span><span class="n">producto_id</span><span class="o">=</span><span class="n">ventas</span><span class="p">.</span><span class="n">producto_id</span>
+<span class="k">group</span> <span class="k">by</span> <span class="n">productos</span><span class="p">.</span><span class="n">nombre</span>
+<span class="p">)</span>
+<span class="k">select</span> <span class="n">Producto</span><span class="p">,</span> <span class="n">Ventas</span><span class="p">,</span>
+<span class="n">row_number</span><span class="p">()</span> <span class="n">over</span> <span class="p">(</span><span class="k">order</span> <span class="k">by</span> <span class="n">Ventas</span> <span class="k">desc</span><span class="p">)</span> <span class="k">as</span> <span class="s1">'Ranking de productos más vendidos'</span>
+<span class="k">from</span> <span class="n">Producto_Ventas</span>
+</code></pre></div></div>
+<p><img src="/assets/images/SQL/ranking.png" alt="Descripción de la imagen" /></p>
+
+<h3 id="consulta-3-generar-reportes-de-ventas-por-clientes-o-proveedor">Consulta 3: Generar reportes de ventas por clientes o proveedor</h3>
+<p>La tercera consulta generaremos los reportes de ventas por cliente o proveedor. Estos 
+reportes permitirán analizar el comportamiento de compra de los clientes y el 
+desempeño de los proveedores, proporcionando información valiosa para optimizar las 
+relaciones comerciales y mejorar la gestión del inventario.</p>
+
+<h4 id="reportes-por-clientes">Reportes por clientes</h4>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> 
+<span class="n">cli</span><span class="p">.</span><span class="n">nombre</span> <span class="k">as</span> <span class="s1">'Nombre del Cliente'</span><span class="p">,</span>
+<span class="n">cli</span><span class="p">.</span><span class="n">apellido</span> <span class="k">as</span> <span class="s1">'Apellido del Cliente'</span><span class="p">,</span>
+<span class="k">count</span><span class="p">(</span><span class="n">ven</span><span class="p">.</span><span class="n">venta_id</span><span class="p">)</span> <span class="k">as</span> <span class="s1">'Cantidad de Ventas'</span><span class="p">,</span>
+<span class="k">sum</span><span class="p">(</span><span class="n">ven</span><span class="p">.</span><span class="n">total_venta</span><span class="p">)</span> <span class="k">as</span> <span class="s1">'Total Ventas'</span>
+<span class="k">from</span> <span class="n">clientes</span> <span class="n">cli</span>
+<span class="k">join</span> <span class="n">ventas</span> <span class="n">ven</span> <span class="k">on</span> <span class="n">cli</span><span class="p">.</span><span class="n">cliente_id</span><span class="o">=</span><span class="n">ven</span><span class="p">.</span><span class="n">cliente_id</span>
+<span class="k">group</span> <span class="k">by</span> <span class="n">cli</span><span class="p">.</span><span class="n">cliente_id</span><span class="p">,</span> <span class="n">cli</span><span class="p">.</span><span class="n">nombre</span><span class="p">,</span> <span class="n">cli</span><span class="p">.</span><span class="n">apellido</span>
+<span class="k">order</span> <span class="k">by</span> <span class="k">sum</span><span class="p">(</span><span class="n">ven</span><span class="p">.</span><span class="n">total_venta</span><span class="p">)</span> <span class="k">desc</span>
+</code></pre></div></div>
+<p><img src="/assets/images/SQL/Reporte_por_cliente.png" alt="Descripción de la imagen" /></p>
+
+<h4 id="reportes-por-proveedores">Reportes por proveedores</h4>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span>
+<span class="n">proo</span><span class="p">.</span><span class="n">nombre_proveedor</span> <span class="k">as</span> <span class="s1">'Nombre del Proveedor'</span><span class="p">,</span>
+<span class="k">count</span><span class="p">(</span><span class="n">ven</span><span class="p">.</span><span class="n">venta_id</span><span class="p">)</span> <span class="k">as</span> <span class="s1">'Cantidad de Ventas'</span><span class="p">,</span>
+<span class="k">sum</span><span class="p">(</span><span class="n">ven</span><span class="p">.</span><span class="n">total_venta</span><span class="p">)</span> <span class="k">as</span> <span class="s1">'Total Ventas'</span>
+<span class="k">from</span> <span class="n">Proveedores</span> <span class="n">proo</span>
+<span class="k">join</span> <span class="n">Productos</span> <span class="n">prod</span> <span class="k">on</span> <span class="n">proo</span><span class="p">.</span><span class="n">proveedor_id</span> <span class="o">=</span> <span class="n">prod</span><span class="p">.</span><span class="n">proveedor_id</span>
+<span class="k">join</span> <span class="n">Ventas</span> <span class="n">ven</span> <span class="k">on</span> <span class="n">prod</span><span class="p">.</span><span class="n">producto_id</span> <span class="o">=</span> <span class="n">ven</span><span class="p">.</span><span class="n">producto_id</span>
+<span class="k">group</span> <span class="k">by</span> <span class="n">proo</span><span class="p">.</span><span class="n">proveedor_id</span><span class="p">,</span> <span class="n">proo</span><span class="p">.</span><span class="n">nombre_proveedor</span>
+<span class="k">order</span> <span class="k">by</span> <span class="k">sum</span><span class="p">(</span><span class="n">ven</span><span class="p">.</span><span class="n">total_venta</span><span class="p">)</span> <span class="k">desc</span><span class="p">;</span>
+</code></pre></div></div>
+<p><img src="/assets/images/SQL/Reporte_por_proveedor.png" alt="Descripción de la imagen" /></p>
+
+<h3 id="consulta-4-actualización-automática-del-inventario-despues-de-cada-venta">Consulta 4: Actualización automática del inventario despues de cada venta</h3>
+<p>La cuarta consulta implementara una actualización automática del inventario 
+después de cada venta. Mediante el uso de un trigger, el sistema ajustara el stock de 
+los productos vendidos a tiempo real, garantizando un control preciso del inventario.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">delimiter</span> <span class="o">//</span>
+<span class="k">create</span> <span class="k">trigger</span> <span class="n">Actualizar_Inventario</span>
+<span class="k">after</span> <span class="k">insert</span> <span class="k">on</span> <span class="n">Ventas</span>
+<span class="k">for</span> <span class="k">each</span> <span class="k">row</span>
+<span class="k">begin</span>
+<span class="c1">-- Actualiza la tabla inventario</span>
+<span class="k">update</span> <span class="n">Inventario</span>
+<span class="k">set</span> 
+<span class="n">stock_actualizado</span><span class="o">=</span><span class="n">stock_actualizado</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+<span class="n">fecha_actualizado</span><span class="o">=</span><span class="k">new</span><span class="p">.</span><span class="n">fecha_venta</span>
+<span class="k">where</span> <span class="n">producto_id</span> <span class="o">=</span> <span class="k">new</span><span class="p">.</span><span class="n">producto_id</span><span class="p">;</span>
+<span class="c1">-- Actualiza la tabla Productos</span>
+<span class="k">update</span> <span class="n">Productos</span>
+<span class="k">set</span>
+<span class="n">stock</span><span class="o">=</span><span class="n">stock</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="k">where</span> <span class="n">producto_id</span><span class="o">=</span><span class="k">new</span><span class="p">.</span><span class="n">producto_id</span><span class="p">;</span>
+<span class="k">end</span> <span class="o">//</span>
+<span class="k">delimiter</span> <span class="p">;</span>
+</code></pre></div></div>
+<p><img src="/assets/images/SQL/Trigger.png" alt="Descripción de la imagen" /></p>
+
+<h3 id="visualización-en-power-bi">Visualización en Power BI</h3>
+<p>Una vez hecha las consultas, para finalizar, conectamos la base de datos “Tienda” hacia el programa Power BI para la visualización de los datos. En este abarcaremos las preguntas para contestarlas en gráficos:</p>
+<ul>
+  <li><strong>Mostrar las tendencias de ventas en diferentes periodos, en este caso, ventas diarias</strong></li>
+  <li><strong>Visualizar la proporción de las ventas por producto. Mostrando el ranking.</strong></li>
+  <li><strong>Mostrar las tendencias de las ventas del mercado.</strong></li>
+  <li><strong>Visualizar las ventas por clientes y proveedor.</strong></li>
+</ul>
+
+<p><img src="/assets/images/SQL/graficas.png" alt="Descripción de la imagen" /></p>]]></content><author><name>Álvaro López Hurtado</name></author><category term="blog" /><category term="sql" /><category term="powerbi" /><category term="gestion de ventas" /><summary type="html"><![CDATA[Gestión de una Tienda minorista]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">:ramen: Indigo, minimalist jekyll theme</title><link href="http://localhost:4000/indigo-jekyll-theme/" rel="alternate" type="text/html" title=":ramen: Indigo, minimalist jekyll theme" /><published>2016-01-23T22:10:00+00:00</published><updated>2016-01-23T22:10:00+00:00</updated><id>http://localhost:4000/indigo-jekyll-theme</id><content type="html" xml:base="http://localhost:4000/indigo-jekyll-theme/"><![CDATA[<p><img src="https://raw.githubusercontent.com/sergiokopplin/indigo/gh-pages/assets/screen-shot.png" alt="Screenshot" /></p>
+
+<p>Example of project - Indigo Minimalist Jekyll Template - <a href="https://sergiokopplin.github.io/indigo/">Demo</a>. This is a simple and minimalist template for Jekyll for those who likes to eat noodles.</p>
+
+<hr />
+
+<p>What has inside?</p>
+
+<ul>
+  <li>Gulp</li>
+  <li>BrowserSync</li>
+  <li>Stylus</li>
+  <li>SVG</li>
+  <li>No JS</li>
+  <li><a href="https://developers.google.com/speed/pagespeed/insights/?url=http%3A%2F%2Fsergiokopplin.github.io%2Findigo%2F">98/100</a></li>
+</ul>
+
+<hr />
+
+<p><a href="https://sergiokopplin.github.io/indigo/">Check it out</a> here.
+If you need some help, just <a href="https://github.com/sergiokopplin/indigo/issues">tell me</a>.</p>]]></content><author><name>johndoe</name></author><category term="project" /><category term="jekyll" /><summary type="html"><![CDATA[This is a simple and minimalist template for Jekyll for those who likes to eat noodles.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://sergiokopplin.github.io/indigo/assets/images/jekyll-logo-light-solid.png" /><media:content medium="image" url="https://sergiokopplin.github.io/indigo/assets/images/jekyll-logo-light-solid.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
