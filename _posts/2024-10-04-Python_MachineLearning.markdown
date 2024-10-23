@@ -106,9 +106,9 @@ Este gráfico mostrará los trabajos remotos y sus salarios promedio para los a�
 
 ### Explicación del Enfoque:
 
-- **`reset_index()`**: Para facilitar el análisis y la manipulación de los datos, se convierte la estructura de series agrupadas en DataFrames, utilizando este método.
+- **reset_index()**: Para facilitar el análisis y la manipulación de los datos, se convierte la estructura de series agrupadas en DataFrames, utilizando este método.
 - **Renombrar columnas**: Esto ayuda a la manipulación de los datos en etapas posteriores.
-- **`concat()`**: Se utiliza para realizar el análisis comparativo entre los diferentes DataFrames y años.
+- **concat()**: Se utiliza para realizar el análisis comparativo entre los diferentes DataFrames y años.
 
 ![Descripción de la imagen](/assets/images/PYTHON/graf_1_1.png)
 ![Descripción de la imagen](/assets/images/PYTHON/graf_1_2.png)
@@ -121,7 +121,7 @@ Este gráfico mostrará todos los trabajos y sus salarios promedio para los año
 ### Explicación del Enfoque:
 
 - **trabajos_totales**: Uní los índices de los tres años para crear una lista con todos los trabajos.
-- **`reindex()`**: Con la lista de trabajos_totales, hice un `reindex` a los salarios promedio para cada año, añadiendo un `NaN` a los trabajos que no están en un determinado año.
+- **reindex()**: Con la lista de trabajos_totales, hice un **reindex** a los salarios promedio para cada año, añadiendo un **NaN** a los trabajos que no están en un determinado año.
 - **Ajustes en la gráfica de barras**: Desplacé las barras para mantener un ancho y posición correctos en el gráfico.
 
 ![Descripción de la imagen](/assets/images/PYTHON/graf_2_1.png)

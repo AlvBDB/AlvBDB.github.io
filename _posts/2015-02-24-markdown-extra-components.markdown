@@ -22,19 +22,19 @@ Las herramientas utilizadas en este proyecto son **MySQL** para la gestión de l
 ### Tablas:
 
 - **Clientes**: Almacena la información de los clientes que realizan compras en la tienda.
-  - Campos: `cliente_id`, `nombre`, `apellido`, `email`, `telefono`.
+  - Campos: **cliente_id**, **nombre**, **apellido**, **email**, **telefono**.
 
 - **Proveedores**: Registra los datos de contacto de los proveedores de productos.
-  - Campos: `proveedor_id`, `nombre_proveedor`, `contacto_proveedor`.
+  - Campos: **proveedor_id**, **nombre_proveedor**, **contacto_proveedor**.
 
 - **Productos**: Contiene el catálogo de productos disponibles para la venta.
-  - Campos: `producto_id`, `nombre`, `precio`, `categoria`, `stock`, `proveedor_id`.
+  - Campos: **producto_id**, **nombre**, **precio**, **categoria**, **stock**, **proveedor_id**.
 
 - **Ventas**: Registra cada transacción realizada en la tienda, vinculando a los clientes con los productos comprados y el monto total de la venta.
-  - Campos: `venta_id`, `cliente_id`, `producto_id`, `fecha_venta`, `total_venta`.
+  - Campos: **venta_id**, **cliente_id**, **producto_id**, **fecha_venta**, **total_venta**.
 
 - **Inventario**: Permite llevar un control detallado del stock de cada producto, con un registro del stock inicial y las actualizaciones tras cada venta.
-  - Campos: `inventario_id`, `producto_id`, `stock_inicial`, `stock_actualizado`, `fecha_actualizado`.
+  - Campos: **inventario_id**, **producto_id**, **stock_inicial**, **stock_actualizado**, **fecha_actualizado**.
 
 ### Creación de la base de datos
 
