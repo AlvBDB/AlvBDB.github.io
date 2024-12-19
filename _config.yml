@@ -16,9 +16,9 @@ dark-theme: true
 
 # If you want to include your resume, set to true
 # and specify source (external or local). CURRICULUM
-resume: false
-resume-external: local
-resume-url: #https://google.com/?q=my+resume
+resume: true
+resume-external: external
+resume-url: https://drive.google.com/file/d/1jvaTxEHNVqzA4s__siC5v5cnSY7wrpIv/view?usp=sharing
 
 url: https://alvbdb.github.io/
 # your url: https://USERNAME.github.io
