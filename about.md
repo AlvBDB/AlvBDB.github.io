@@ -14,9 +14,9 @@ layout: page
 
 <div class="prose-lg">
 
-<p>Soy Álvaro López, un joven analista de bases de datos apasionado por aprender y mejorar constantemente en el campo de la gestión y análisis de datos. A través de proyectos prácticos, busco demostrar mi entusiasmo por el desarrollo de soluciones eficaces para la administración y visualización de datos.</p>
+<p>Soy Álvaro López, analista de bases de datos. Trabajo con SQL, Python y Power BI para extraer, transformar y analizar datos, y convertirlos en información clara que ayude a tomar decisiones.</p>
 
-<p>Utilizo herramientas como SQL, Python y Power BI para extraer, transformar y analizar datos, con el objetivo de generar información valiosa que apoye la toma de decisiones estratégicas. Mi enfoque se centra en la optimización de procesos y en la presentación clara y comprensible de los resultados. Siempre estoy dispuesto a enfrentar nuevos retos y adquirir conocimientos que me permitan crecer profesionalmente en el mundo del análisis de datos.</p>
+<p>He desarrollado proyectos de diseño de bases de datos y reporting en Power BI, análisis exploratorio y modelos de machine learning con Python (pandas, scikit-learn), y consultas sobre MongoDB. Me interesan especialmente la calidad de los datos, la optimización de procesos y la visualización de resultados para públicos no técnicos.</p>
 </div>
 
 <h2>Habilidades</h2>
