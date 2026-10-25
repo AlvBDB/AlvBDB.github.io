@@ -19,7 +19,7 @@ author: Álvaro López Hurtado
 description: Análisis sobre Spotify
 ---
 
-# Análisis de Salarios y Factores Relacionados con el Empleo (2020-2022)
+# Análisis de las Canciones Más Reproducidas en Spotify (2023)
 
 En este proyecto, analicé las canciones más reproducidas en Spotify utilizando una base de datos almacenada en MongoDB. A través de este análisis, profundicé en las características que influyen en la popularidad de las canciones, medida por el número de streams. Respondí a las siguientes preguntas clave:
 
