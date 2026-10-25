@@ -2,16 +2,23 @@
 layout: page
 title: Blog
 ---
-<section class="list">
-	{% if site.posts.size == 0 %}
-		<p class="text-center">Nothing published yet!</p>
-	{% else %}
-		{% for post in site.posts %}
-			{% if post.category == 'blog' %}
-				{% if post.hidden != true %}
-					{% include blog-post.html %}
-				{% endif %}
-			{% endif %}
-		{% endfor %}
-	{% endif %}
+<header class="page-head animated">
+    <h1>Proyectos</h1>
+    <p>Análisis de datos, bases de datos y visualización.</p>
+</header>
+
+<section class="section">
+    {% if site.posts.size == 0 %}
+        <p class="empty">Todavía no hay nada publicado.</p>
+    {% else %}
+        <div class="cards">
+        {% for post in site.posts %}
+            {% if post.category == 'blog' %}
+                {% if post.hidden != true %}
+                    {% include blog-post.html %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        </div>
+    {% endif %}
 </section>

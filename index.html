@@ -2,3 +2,42 @@
 layout: page
 title: Home
 ---
+<section class="hero animated">
+    {% include avatar.html %}
+    <span class="eyebrow">{{ site.bio }}</span>
+    <h1 class="title">{{ site.title }}</h1>
+    {% if site.intro %}<p class="intro">{{ site.intro }}</p>{% endif %}
+
+    <div class="actions">
+        {% if site.resume == true %}
+            <a class="btn primary" href="{% if site.resume-external %}{{ site.resume-url }}{% else %}{{ site.url }}/{{ site.resume-url }}{% endif %}"{% if site.resume-external %} target="_blank" rel="noopener"{% endif %}>
+                <i class="fa-regular fa-file-lines"></i> Ver currículum
+            </a>
+        {% endif %}
+        {% if site.linkedin %}
+            <a class="btn" href="https://www.linkedin.com/in/{{ site.linkedin }}" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+        {% endif %}
+        {% if site.github %}
+            <a class="btn" href="https://github.com/{{ site.github }}" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+        {% endif %}
+        {% if site.email %}
+            <a class="btn" href="mailto:{{ site.email }}"><i class="fa-regular fa-envelope"></i> Contacto</a>
+        {% endif %}
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <h2>Proyectos</h2>
+        {% if site.blog == true %}<a href="{{ site.url }}/blog">Ver todos →</a>{% endif %}
+    </div>
+    <div class="cards">
+        {% assign mostrados = 0 %}
+        {% for post in site.posts %}
+            {% if post.hidden != true and mostrados < 4 %}
+                {% include blog-post.html %}
+                {% assign mostrados = mostrados | plus: 1 %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</section>

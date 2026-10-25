@@ -1,0 +1,1 @@
+{% assign meses = "ene,feb,mar,abr,may,jun,jul,ago,sep,oct,nov,dic" | split: "," %}{% assign mes = fecha | date: "%-m" | minus: 1 %}<time datetime="{{ fecha | date: '%Y-%m-%d' }}">{{ meses[mes] }} {{ fecha | date: "%Y" }}</time>

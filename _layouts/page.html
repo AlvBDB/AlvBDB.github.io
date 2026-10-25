@@ -3,6 +3,8 @@ layout: default
 ---
 {% include header.html %}
 
-{{content}}
+<main class="container page-{{ page.title | default: 'post' | slugify }}">
+{{ content }}
+</main>
 
 {% include footer.html %}

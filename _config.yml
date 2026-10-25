@@ -2,13 +2,18 @@
 title: Álvaro López Hurtado
 bio: Analista de Base de Datos
 
+# texto breve que aparece en la portada
+intro: Extraigo, transformo y analizo datos con SQL, Python y Power BI para convertirlos en información clara que apoye la toma de decisiones.
+
 # twitter summary info
 description: Analista de Base de Datos
 
 # if it's an external image, update below for true
 # better with square images
+# sin foto se muestran las iniciales; para usar una foto,
+# súbela a assets/images y descomenta la línea "picture"
 external-image: false
-picture: assets/images/jimmy_pug.jpg
+# picture: assets/images/foto.jpg
 
 # your site color theme, true for dark theme, 
 # false to light theme, auto to switch with system.
@@ -20,7 +25,7 @@ resume: true
 resume-external: external
 resume-url: https://drive.google.com/file/d/1jvaTxEHNVqzA4s__siC5v5cnSY7wrpIv/view?usp=sharing
 
-url: https://alvbdb.github.io/
+url: https://alvbdb.github.io
 # your url: https://USERNAME.github.io
 
 permalink: /:title/

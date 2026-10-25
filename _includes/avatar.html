@@ -1,0 +1,1 @@
+{% if site.picture %}<img class="avatar" alt="{{ site.title }}" src="{% if site.external-image %}{{ site.picture }}{% else %}{{ site.url }}/{{ site.picture }}{% endif %}" />{% else %}{% assign nombre = site.title | split: " " %}<span class="avatar" aria-hidden="true">{{ nombre[0] | slice: 0 }}{{ nombre[1] | slice: 0 }}</span>{% endif %}
