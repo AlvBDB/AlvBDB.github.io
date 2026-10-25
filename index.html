@@ -10,7 +10,7 @@ title: Home
 
     <div class="actions">
         {% if site.resume == true %}
-            <a class="btn primary" href="{% if site.resume-external %}{{ site.resume-url }}{% else %}{{ site.url }}/{{ site.resume-url }}{% endif %}"{% if site.resume-external %} target="_blank" rel="noopener"{% endif %}>
+            <a class="btn primary" href="{% if site.resume-external %}{{ site.resume-url }}{% else %}{{ site.url }}/{{ site.resume-url }}{% endif %}" target="_blank" rel="noopener">
                 <i class="fa-regular fa-file-lines"></i> Ver currículum
             </a>
         {% endif %}
